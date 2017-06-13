@@ -1,3 +1,7 @@
+// Copyright (c) Jeevanandam M. (https://github.com/jeevatkm)
+// aah-cb/minify source code and usage is governed by a MIT style
+// license that can be found in the LICENSE file.
+
 package minify
 
 import (
@@ -13,15 +17,23 @@ const htmlContentType = "text/html"
 
 var m *minify.M
 
+//‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+// Global methods
+//___________________________________
+
 // HTML method calls the minify library func to minify content. It reads data
 // from reader and writes it to the given writer.
 func HTML(contentType string, w io.Writer, r io.Reader) error {
 	return m.Minify(htmlContentType, w, r)
 }
 
-// aah event func to initilize the minify instance and adding minifier into
-// framework
-func addingMinifer(e *aah.Event) {
+//‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+// Unexported methods
+//___________________________________
+
+// addingHTMLMinifer event func to initilize the minify instance and
+// adding minifier into framework
+func addingHTMLMinifer(e *aah.Event) {
 	m = minify.New()
 	cfg := aah.AppConfig()
 
@@ -39,5 +51,5 @@ func addingMinifer(e *aah.Event) {
 
 func init() {
 	// register into aah framework
-	aah.OnInit(addingMinifer)
+	aah.OnInit(addingHTMLMinifer)
 }
